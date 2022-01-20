@@ -3,6 +3,7 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from . import tipo_cambio
 
 
 auth = Blueprint('auth', __name__)
@@ -17,7 +18,8 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('¡Ingreso correcto!', category='success')
+                tc_dia = tipo_cambio.tipo_cambio_dia()
+                flash("¡Ingreso correcto! -------> Tipo de cambio de referencia del día según BANGUAT: " + str(tc_dia) +".", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
