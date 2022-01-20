@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Note
 from . import db
 import json
+from . import tipo_cambio
 
 views = Blueprint('views', __name__)
 
@@ -11,15 +12,22 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if request.method == 'POST':
-        note = request.form.get('note')
+        usd = request.form.get('usd')
+        gtq = request.form.get('gtq')
 
-        if len(note) < 1:
-            flash('La nota es demasiado corta', category='error')
-        else:
-            new_note = Note(data=note, user_id=current_user.id)
+
+        if (usd):
+            resultado = tipo_cambio.convertir_usd_a_gtq(float(usd))
+            new_note = Note(data=resultado, user_id=current_user.id)
             db.session.add(new_note)
             db.session.commit()
-            flash('¡Nota añadida!', category='success')
+            flash('¡Dólares convertidos a quetzales!', category='success')
+        elif (gtq):
+            resultado = tipo_cambio.convertir_gtq_a_usd(float(gtq))
+            new_note = Note(data=resultado, user_id=current_user.id)
+            db.session.add(new_note)
+            db.session.commit()
+            flash('¡Quetzales convertidos a dólares!', category='success')
 
     return render_template("home.html", user=current_user)
 
