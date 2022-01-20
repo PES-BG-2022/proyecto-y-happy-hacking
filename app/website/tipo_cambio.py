@@ -8,9 +8,15 @@ def tipo_cambio_dia():
     return tipo_de_cambio_dia, fecha
 
 def convertir_usd_a_gtq(usd):
-    cliente = Client('https://www.banguat.gob.gt/variables/ws/TipoCambio.asmx?WSDL')
     dolares = float(usd)
     tc, fecha = tipo_cambio_dia()
     quetzales = dolares*tc
     texto = str(usd) + " USD -> " + str(quetzales) + " GTQ" + " calculado el " + str(fecha)
+    return texto
+
+def convertir_gtq_a_usd(gtq):
+    quetzales = float(gtq)
+    tc, fecha = tipo_cambio_dia()
+    dolares = quetzales/tc
+    texto = str(gtq) + " GTQ -> " + str(dolares) + " USD" + " calculado el " + str(fecha)
     return texto
