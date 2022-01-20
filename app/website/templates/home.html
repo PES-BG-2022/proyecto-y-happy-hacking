@@ -1,6 +1,27 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Libreta de notas</h1>
+<H1>CONVERSOR DE TIPO DE CAMBIO</H1>
+<form method="POST">
+<div id="scale_main">
+
+  <div class="measurement" id="usd">
+    <h4>USD</h4>
+
+    <input class="input" type="text" id="usd_input" name="usd"></input>
+    <span class="unit">Dólares</span>
+  </div>
+  <div class="measurement" id="gtq">
+    <h4>GTQ</h4>
+    <input class="input" type="text" id="gtq_input" name="gtq"></input>
+    <span class="unit">Quetzales</span>
+  </div>
+
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Calcular</button>
+  </div>
+
+</div>
+<h1 align="center">Historial de conversiones</h1>
 <ul class="list-group list-group-flush" id="notes">
   {% for note in user.notes %}
   <li class="list-group-item">
@@ -11,11 +32,10 @@
   </li>
   {% endfor %}
 </ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Añadir nota</button>
-  </div>
+
+
+  <!--<textarea name="note" id="note" class="form-control"></textarea>
+  <br/>-->
 </form>
+
 {% endblock %}
