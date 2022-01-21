@@ -104,6 +104,15 @@ label{
   font-family: sans-serif;
 }
 
+.inputfecha{
+  width: 45%;
+  font-size: 12px;
+  vertical-align: bottom;
+  border-color: #DEE0E5;
+  border-style: solid;
+  font-family: sans-serif;
+}
+
 .unit{
   font-family: sans-serif;
   font-weight: 700;

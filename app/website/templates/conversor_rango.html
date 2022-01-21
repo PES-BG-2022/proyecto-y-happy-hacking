@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<H1>CONVERSOR DE TIPO DE CAMBIO POR RANGO</H1>
+<form method="POST">
+<div id="scale_main">
+
+  <div class="measurement" id="usd">
+    <h4>Desde</h4>
+
+    <span class="unit">Desde</span>
+    <input class="inputfecha" type="date" id="fecha_inicio_input" name="fecha_inicio"></input>
+
+  </div>
+  <div class="measurement" id="gtq">
+    <h4>Hasta</h4>
+
+    <span class="unit">Hasta</span>
+    <input class="inputfecha" type="date" id="fecha_fin_input" name="fecha_fin"></input>
+  </div>
+
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Obtener</button>
+  </div>
+
+</div>
+  <br/>
+  <img id="logo_banguat" src="{{ url_for('static', filename='/images/output.png') }}"/>
+<!--<h1 align="center">Historial de conversiones</h1>
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  <li class="list-group-item">
+    {{ note.data }}
+    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>-->
+
+
+  <!--<textarea name="note" id="note" class="form-control"></textarea>
+  <br/>-->
+</form>
+
+{% endblock %}

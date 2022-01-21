@@ -1,5 +1,9 @@
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask_login import login_required, current_user
 from zeep import Client
-
+import pandas as pd
+import os
+views = Blueprint('views', __name__)
 
 def tipo_cambio_dia():
     cliente = Client('https://www.banguat.gob.gt/variables/ws/TipoCambio.asmx?WSDL')
@@ -20,3 +24,27 @@ def convertir_gtq_a_usd(gtq):
     dolares = quetzales/tc
     texto = str(gtq) + " GTQ -> " + str(dolares) + " USD" + " calculado el " + str(fecha)
     return texto
+
+def obtener_tasas_por_rango(fechainicio, fechafin):
+    miruta = os.path.dirname(__file__)
+    print(miruta)
+    cliente = Client('https://www.banguat.gob.gt/variables/ws/TipoCambio.asmx?WSDL')
+    tasas = cliente.service.TipoCambioRango(fechainit=fechainicio,fechafin=fechafin)['Vars']['Var']
+    ltasas, lfechas = crear_series_datos(tasas)
+    registro = pd.Series(ltasas)
+    fecha = pd.Series(lfechas)
+    df = pd.DataFrame({'Fecha': fecha, 'Tipo de Cambio': registro})
+    a = df.plot(x='Fecha', y='Tipo de Cambio', kind='line', figsize=(9, 5), title='Evolución del tipo de cambio de referencia', grid=True, legend=True, ylabel='Quetzales')
+    fig = a.get_figure()
+    fig.savefig(miruta + "/static/images/output.png")
+    if(fig):
+        return redirect('/resultadorango')
+
+
+def crear_series_datos(tasas):
+    lista_fechas = []
+    lista_tasas = []
+    for elemento in tasas:
+        lista_fechas.append(elemento['fecha'])
+        lista_tasas.append(elemento['venta'])
+    return lista_tasas, lista_fechas
