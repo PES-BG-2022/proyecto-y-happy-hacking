@@ -12,15 +12,16 @@ def tipo_cambio_dia():
     return tipo_de_cambio_dia, fecha
 
 def convertir_usd_a_gtq(usd):
-    dolares = float(usd)
+    dolares = float(round(usd,2))
     tc, fecha = tipo_cambio_dia()
-    quetzales = dolares*tc
-    texto = str(usd) + " USD -> " + str(quetzales) + " GTQ" + " calculado el " + str(fecha)
+    quetzales = round((dolares*tc),2)
+    texto = str("{:.2f}".format(usd)) + " USD -> " + str(quetzales) + " GTQ" + " calculado el " + str(fecha)
     return texto
 
 def convertir_gtq_a_usd(gtq):
-    quetzales = float(gtq)
+    quetzales = float(round(gtq,2))
     tc, fecha = tipo_cambio_dia()
+<<<<<<< HEAD
     dolares = quetzales/tc
     texto = str(gtq) + " GTQ -> " + str(dolares) + " USD" + " calculado el " + str(fecha)
     return texto
@@ -48,3 +49,8 @@ def crear_series_datos(tasas):
         lista_fechas.append(elemento['fecha'])
         lista_tasas.append(elemento['venta'])
     return lista_tasas, lista_fechas
+=======
+    dolares = round((quetzales/tc),2)
+    texto = str("{:.2f}".format(gtq)) + " GTQ -> " + str(dolares) + " USD" + " calculado el " + str(fecha)
+    return texto
+>>>>>>> 2aaba71b7dbc0948116d7a4eb4c574960c49b394
